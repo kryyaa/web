@@ -10,17 +10,19 @@
             padding: 0;
             box-sizing: border-box;
         }
-
-        body {
+        html, body {
             background-color: #09090b;
-            min-height: 100vh;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            touch-action: none;
+        }
+        body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden
         }
-
         .ticker-wrap {
             position: fixed;
             top: 0;
@@ -32,42 +34,35 @@
             overflow: hidden;
             z-index: 100;
         }
-
         .ticker {
             display: flex;
             white-space: nowrap;
-            width: max-content;
             animation: ticker 28s linear infinite;
         }
-
-        .ticker span {
+        .ticker-item {
             font-family: 'Courier New', monospace;
             font-size: 0.72rem;
             color: #555;
             text-transform: lowercase;
             letter-spacing: 0.08em;
             padding-right: 3rem;
+            flex-shrink: 0;
         }
-
-        .ticker span a {
+        .ticker-item a {
             color: #888;
             text-decoration: none;
         }
-
-        .ticker span a:hover {
+        .ticker-item a:hover {
             color: #ccc;
         }
-
         .sep {
             margin: 0 1rem;
             color: #333;
         }
-
         @keyframes ticker {
-            0% { transform: translateX(0); }
+            0%   { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-
         .scene {
             perspective: 1200px;
             display: flex;
@@ -75,13 +70,15 @@
             justify-content: center;
             margin-top: 2rem;
         }
-
         .card {
             transform-style: preserve-3d;
             transition: transform 0.12s ease-out;
             will-change: transform;
         }
-
+        .card a {
+            display: block;
+            cursor: pointer;
+        }
         .card img {
             max-width: 90vw;
             max-height: 85vh;
@@ -94,17 +91,38 @@
     </style>
 </head>
 <body>
-
     <div class="ticker-wrap">
         <div class="ticker" id="ticker">
-            <span>кря реально крутой нафиг <span class="sep">✦</span> <a href="https://t.me/kryyaasoft">т.ме/круасофт</a> <span class="sep">✦</span> приватная группа с кучей материалов — 400 руб навсегда!!!! <span class="sep">✦</span> <a href="https://t.me/kryyaa">т.ме/круа</a> <span class="sep">✦</span> насколько же он крут???7?7? <span class="sep">✦</span></span><span>kryYYyAYAaa <span class="sep">✦</span> <a href="https://t.me/kryyaasoft">т.ме/круасофт</a> <span class="sep">✦</span> приватная группа с кучей материалов — 400 руб навсегда!!!! <span class="sep">✦</span> <a href="https://t.me/kryyaa">т.ме/круа</a> <span class="sep">✦</span> всё таки он реально круой <span class="sep">✦</span></span>
+
+            <span class="ticker-item">кря реально крутой нафиг <span class="sep">✦</span> <a href="https://t.me/kryyaasoft">т.ме/круасофт</a> <span class="sep">✦</span> приватная группа с кучей материалов — 400 руб навсегда!!!! <span class="sep">✦</span> <a href="https://t.me/kryyaa">т.ме/круа</a> <span class="sep">✦</span> насколько же он крут???7?7? <span class="sep">✦</span> kryYYyAYAaa <span class="sep">✦</span> <a href="https://t.me/kryyaasoft">т.ме/круасофт</a> <span class="sep">✦</span> приватная группа с кучей материалов — 400 руб навсегда!!!! <span class="sep">✦</span> <a href="https://t.me/kryyaa">т.ме/круа</a> <span class="sep">✦</span> всё таки он реально крутой <span class="sep">✦</span></span>
+
+            <span class="ticker-item">кря реально крутой нафиг <span class="sep">✦</span> <a href="https://t.me/kryyaasoft">т.ме/круасофт</a> <span class="sep">✦</span> приватная группа с кучей материалов — 400 руб навсегда!!!! <span class="sep">✦</span> <a href="https://t.me/kryyaa">т.ме/круа</a> <span class="sep">✦</span> насколько же он крут???7?7? <span class="sep">✦</span> kryYYyAYAaa <span class="sep">✦</span> <a href="https://t.me/kryyaasoft">т.ме/круасофт</a> <span class="sep">✦</span> приватная группа с кучей материалов — 400 руб навсегда!!!! <span class="sep">✦</span> <a href="https://t.me/kryyaa">т.ме/круа</a> <span class="sep">✦</span> всё таки он реально крутой <span class="sep">✦</span></span>
         </div>
     </div>
 
     <div class="scene">
         <div class="card" id="card">
-            <img src="ascii-art-text.png" alt="kryyaa">
+            <a href="https://t.me/kryyaasoft" target="_blank" rel="noopener">
+                <img src="ascii-art-text.png" alt="kryyaa">
+            </a>
         </div>
     </div>
+
+    <script>
+        const card = document.getElementById('card');
+        document.addEventListener('mousemove', (e) => {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const rx = ((e.clientY - cy) / cy) * -8;
+            const ry = ((e.clientX - cx) / cx) * 8;
+            card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        document.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+
+        document.addEventListener('wheel', e => e.preventDefault(), { passive: false });
+        document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+    </script>
 </body>
 </html>
