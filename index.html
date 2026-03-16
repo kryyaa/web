@@ -91,23 +91,9 @@
             user-select: none;
             pointer-events: none;
         }
-
-        .cursor {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background: #fff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 999;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference;
-        }
     </style>
 </head>
 <body>
-
-    <div class="cursor" id="cursor"></div>
 
     <div class="ticker-wrap">
         <div class="ticker" id="ticker">
@@ -120,27 +106,5 @@
             <img src="ascii-art-text.png" alt="kryyaa">
         </div>
     </div>
-
-    <script>
-        const card = document.getElementById('card');
-        const cursor = document.getElementById('cursor');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-
-            const rect = card.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            const dx = e.clientX - centerX;
-            const dy = e.clientY - centerY;
-
-            const tiltX = -(dy / window.innerHeight) * 10;
-            const tiltY = (dx / window.innerWidth) * 10;
-
-            card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-        });
-    </script>
 </body>
 </html>
